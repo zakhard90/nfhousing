@@ -48,9 +48,10 @@ contract('NFHousing', accounts => {
             balance.should.equal(2, "The balance doesn't match the expected value")
         })
 
-        // + token uri should be complete i.e: https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/1
+        // token uri should be complete i.e: https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/1
         it('should return token uri', async function () {
-            await this.contract.getTokenURI.call(tokens[1]).should.equal(baseUri + tokens[1], "The token URI is incorrect")
+            let uri = await this.contract.getTokenURI.call(tokens[1])
+            uri.should.equal(baseUri + tokens[1], "The token URI is incorrect")
         })
 
         it('should transfer token from one owner to another', async function () {
@@ -59,9 +60,10 @@ contract('NFHousing', accounts => {
             result = await this.contract.transferFrom(account_two, account_one, tokens[2], { from: account_two })
             result.logs.length.should.equal(1, "No events have been emitted")
             result.logs[0].event.should.equal("Transfer", "The emitted event name isn't Transfer")
-            await this.contract.ownerOf.call(tokens[2]).should.equal(account_one, "The token hasn't been transfered correctly")
+            let tokenOwner = await this.contract.ownerOf.call(tokens[2])
+            tokenOwner.should.equal(account_one, "The token hasn't been transfered correctly")
         })
-    })
+    });
 
     describe('have ownership properties', function () {
         beforeEach(async function () {
@@ -73,7 +75,8 @@ contract('NFHousing', accounts => {
         })
 
         it('should return contract owner', async function () {
-            await this.contract.contractOwner.call().should.equal(owner, "The contract owner hasn't been assigned correctly")
+            let contractOwner = await this.contract.contractOwner.call()
+            contractOwner.should.equal(owner, "The contract owner hasn't been assigned correctly")
         })
     })
 
