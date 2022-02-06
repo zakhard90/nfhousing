@@ -30,6 +30,10 @@ contract Ownable {
         _;
     }
 
+    function contractOwner() external view returns (address) {
+        return _contractOwner;
+    }
+
     function isContractOwner() internal view returns (bool) {
         return (msg.sender == _contractOwner);
     }

@@ -17,6 +17,8 @@ contract('NFHousing', accounts => {
     const symbol = "NFH"
     const baseUri = "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/"
 
+    const EVM_REVERT = "VM Exception while processing transaction: revert";
+
     NFHousingToken.defaults({
         gas: 6000000,
         gasPrice: '2000000'
@@ -25,7 +27,6 @@ contract('NFHousing', accounts => {
 
     describe('match erc721 spec', function () {
         beforeEach(async function () {
-
             this.contract = await NFHousingToken.new(name, symbol, { from: owner })
 
             // + TODO: mint multiple tokens
@@ -47,30 +48,33 @@ contract('NFHousing', accounts => {
             balance.should.equal(2, "The balance doesn't match the expected value")
         })
 
-        // token uri should be complete i.e: https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/1
+        // + token uri should be complete i.e: https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/1
         it('should return token uri', async function () {
-            let uri = await this.contract.getTokenURI.call(tokens[1])
-            uri.should.equal(baseUri + tokens[1],"The token URI is incorrect")
+            await this.contract.getTokenURI.call(tokens[1]).should.equal(baseUri + tokens[1], "The token URI is incorrect")
         })
 
         it('should transfer token from one owner to another', async function () {
-
+            result = await this.contract.approve(account_one, tokens[2], { from: account_two })
+            result.logs.length.should.equal(1, "No events have been emitted")
+            result = await this.contract.transferFrom(account_two, account_one, tokens[2], { from: account_two })
+            result.logs.length.should.equal(1, "No events have been emitted")
+            result.logs[0].event.should.equal("Transfer", "The emitted event name isn't Transfer")
+            await this.contract.ownerOf.call(tokens[2]).should.equal(account_one, "The token hasn't been transfered correctly")
         })
-    });
-    /*
-        describe('have ownership properties', function () {
-            beforeEach(async function () {
-                this.contract = await ERC721MintableComplete.new({ from: owner });
-            })
-    
-            it('should fail when minting when address is not contract owner', async function () {
-    
-            })
-    
-            it('should return contract owner', async function () {
-    
-            })
-    
-        });
-        */
-})
+    })
+
+    describe('have ownership properties', function () {
+        beforeEach(async function () {
+            this.contract = await NFHousingToken.new(name, symbol, { from: owner })
+        })
+
+        it('should fail when minting when address is not contract owner', async function () {
+            await this.contract.mint(account_one, tokens[0], { from: account_one }).should.be.rejectedWith(EVM_REVERT)
+        })
+
+        it('should return contract owner', async function () {
+            await this.contract.contractOwner.call().should.equal(owner, "The contract owner hasn't been assigned correctly")
+        })
+    })
+
+});
