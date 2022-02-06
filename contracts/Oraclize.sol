@@ -1547,16 +1547,20 @@ contract usingOraclize {
         if (_i == 0) {
             return "0";
         }
+
         uint256 j = _i;
         uint256 len;
         while (j != 0) {
             len++;
             j /= 10;
         }
+
         bytes memory bstr = new bytes(len);
         uint256 k = len;
+
         while (_i != 0) {
-            bstr[k--] = bytes1(uint8(48 + (_i % 10)));
+            k--;
+            bstr[k] = bytes1(uint8(48 + (_i % 10)));
             _i /= 10;
         }
         return string(bstr);

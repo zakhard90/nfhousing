@@ -633,7 +633,7 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
         require(_exists(tokenId), "Token does not exist");
         string memory tokenUri = strConcat(
             _baseTokenURI,
-            "1"
+            uint2str(tokenId)
         );
         _tokenURIs[tokenId] = tokenUri;
     }
