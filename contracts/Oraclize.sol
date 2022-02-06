@@ -93,7 +93,7 @@ abstract contract OraclizeI {
         string calldata _datasource,
         bytes calldata _argN,
         uint256 _gasLimit
-    ) external virtual payable returns (bytes32 _id);
+    ) external payable virtual returns (bytes32 _id);
 
     function query2_withGasLimit(
         uint256 _timestamp,
@@ -101,7 +101,7 @@ abstract contract OraclizeI {
         string calldata _arg1,
         string calldata _arg2,
         uint256 _gasLimit
-    ) external virtual payable returns (bytes32 _id);
+    ) external payable virtual returns (bytes32 _id);
 }
 
 abstract contract OraclizeAddrResolverI {
@@ -1554,7 +1554,7 @@ contract usingOraclize {
             j /= 10;
         }
         bytes memory bstr = new bytes(len);
-        uint256 k = len - 1;
+        uint256 k = len;
         while (_i != 0) {
             bstr[k--] = bytes1(uint8(48 + (_i % 10)));
             _i /= 10;

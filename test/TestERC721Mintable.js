@@ -3,11 +3,18 @@ const NFHousingToken = artifacts.require('NFHousingToken')
 
 require('chai').use(require('chai-as-promised')).should()
 
-contract('ERC721Mintable', accounts => {
+const getNumber = (bigNumber) => {
+    return Number(bigNumber.toString())
+}
+
+contract('NFHousing', accounts => {
 
     const [owner, account_one, account_two] = accounts
     const tokens = [1, 2, 3, 4, 5]
     let result
+
+    const name = "NFHouse"
+    const symbol = "NFH"
 
     NFHousingToken.defaults({
         gas: 6000000,
@@ -18,19 +25,20 @@ contract('ERC721Mintable', accounts => {
     describe('match erc721 spec', function () {
         beforeEach(async function () {
 
-            this.contract = await NFHousingToken.new("NFHouse", "NFH", { from: owner })
+            this.contract = await NFHousingToken.new(name, symbol, { from: owner })
 
             // + TODO: mint multiple tokens
             result = await this.contract.mint(account_one, tokens[0], { from: owner })
             result.logs.length.should.equal(1, "No events have been emitted")
-            // result = await this.contract.mint(account_two, tokens[1], { from: owner })
-            // result.logs.length.should.equal(1, "No events have been emitted")
-            // result = await this.contract.mint(account_one, tokens[2], { from: owner })
-            // result.logs.length.should.equal(1, "No events have been emitted")
+            result = await this.contract.mint(account_two, tokens[1], { from: owner })
+            result.logs.length.should.equal(1, "No events have been emitted")
+            result = await this.contract.mint(account_one, tokens[2], { from: owner })
+            result.logs.length.should.equal(1, "No events have been emitted")
         })
 
         it('should return total supply', async function () {
             let totalSupply = await this.contract.totalSupply.call()
+            totalSupply = getNumber(totalSupply)
             totalSupply.should.equal(3, "The total supply doesn't match the expected value")
 
         })
