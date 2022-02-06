@@ -1,0 +1,1 @@
+ganache-cli -a 10 -e 100 --chainId 5777

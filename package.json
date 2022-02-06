@@ -13,12 +13,16 @@
     "author": "pk <pkrasam@gmail.com> (https://ipfs.infura.io/ipfs/QmSXiR9Khm3yo1J67nUopvVBxFJ8YGN2fUGZ34Etr3m92x/)",
     "license": "MIT",
     "devDependencies": {
-        "lite-server": "^2.6.1"
+        "lite-server": "^2.6.1",
+        "chai": "4.2.0",
+        "chai-as-promised": "7.1.1",
+        "chai-bignumber": "3.0.0"
     },
     "dependencies": {
         "@openzeppelin/contracts": "^4.4.2",
         "@truffle/hdwallet-provider": "^2.0.3",
         "solc": "^0.8.11",
-        "solc-js": "^1.0.1"
+        "solc-js": "^1.0.1",
+        "web3": "^1.7.0"
     }
 }
