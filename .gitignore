@@ -14,3 +14,12 @@ yarn-error.log*
 
 # secret info
 secret.json
+
+zokrates/code/square/out
+zokrates/code/square/proving.key
+zokrates/code/square/verification.key
+zokrates/code/square/verifier.sol
+zokrates/code/square/witness
+zokrates/code/square/proof.json
+
+instructions.txt

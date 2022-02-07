@@ -1,10 +1,10 @@
 // migrating the appropriate contracts
 var NFHousingToken = artifacts.require("./NFHousingToken.sol");
-// var SquareVerifier = artifacts.require("./SquareVerifier.sol");
-// var SolnSquareVerifier = artifacts.require("./SolnSquareVerifier.sol");
+var Verifier = artifacts.require("./Verifier.sol");
+var SolnPreimageVerifier = artifacts.require("./SolnPreimageVerifier.sol");
 
 module.exports = function (deployer) {
-  // deployer.deploy(SquareVerifier);
-  // deployer.deploy(SolnSquareVerifier);
+  deployer.deploy(Verifier);
+  deployer.deploy(SolnPreimageVerifier);
   deployer.deploy(NFHousingToken, "NFHousing", "NFH");
 };

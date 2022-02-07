@@ -1,4 +1,3 @@
-const Web3 = require('web3')
 const NFHousingToken = artifacts.require('NFHousingToken')
 
 require('chai').use(require('chai-as-promised')).should()
