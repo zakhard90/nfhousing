@@ -4,8 +4,7 @@ pragma solidity >=0.8.11;
 import "./NFHousing.sol";
 import "./Verifier.sol";
 
-// ??? TODO define a contract call to the zokrates generated solidity contract <Verifier> or <renamedVerifier>
-
+// + TODO define a contract call to the zokrates generated solidity contract <Verifier> or <renamedVerifier>
 // + TODO define another contract named SolnSquareVerifier that inherits from your ERC721Mintable class
 
 contract SolnPreimageVerifier is NFHousingToken {
@@ -16,7 +15,7 @@ contract SolnPreimageVerifier is NFHousingToken {
     // + TODO Create an event to emit when a solution is added
     // + TODO Create a function to add the solutions to the array and emit the event
     // + TODO Create a function to mint new NFT only after the solution has been verified
-    //  - make sure the solution is unique (has not been used before)
+    // + - make sure the solution is unique (has not been used before)
     //  - make sure you handle metadata as well as tokenSuplly
 
     mapping(bytes32 => Solution) internal solutions;
@@ -43,12 +42,16 @@ contract SolnPreimageVerifier is NFHousingToken {
 
     function addSolution(
         uint256 token,
-        uint256[2] calldata a,
-        uint256[2][2] calldata b,
-        uint256[2] calldata c,
-        uint256[2] calldata i
-    ) external {
+        uint256[2] memory a,
+        uint256[2][2] memory b,
+        uint256[2] memory c,
+        uint256[2] memory i
+    ) private {
         bytes32 key = keccak256(abi.encodePacked(a, b, c, i));
+        require(
+            solutionsSubmitted[key] == false,
+            "Token proof hash already used"
+        );
         Solution memory s = Solution(a, b, c, i);
         solutions[key] = s;
         solutionsSubmitted[key] = true;
@@ -56,11 +59,31 @@ contract SolnPreimageVerifier is NFHousingToken {
         emit SolutionAdded(token, key, msg.sender, block.timestamp);
     }
 
+    /// api for verification
+    function verify(
+        uint256 token,
+        uint256[2] memory a,
+        uint256[2][2] memory b,
+        uint256[2] memory c,
+        uint256[2] memory i
+    ) external returns (bool) {
+        require(
+            verifier.verify(a, b, c, i),
+            "Verification of proof data failed"
+        );
+        addSolution(token, a, b, c, i);
+        return true;
+    }
+
     function mintVerified(address to, uint256 token)
         external
         returns (bool minted)
     {
-        require(solutionsPerToken[token].length != 0, "Token proof required");
+        require(
+            solutionsPerToken[token].length == 0,
+            "Token proof already provided"
+        );
+        /// require verifier.verify to pass
         return super.mint(to, token);
     }
 }
@@ -70,7 +93,7 @@ contract PreimageVerifier is Verifier {
         uint256[2] memory a,
         uint256[2][2] memory b,
         uint256[2] memory c,
-        uint256[2] memory input
+        uint256[2] memory i
     ) public view returns (bool) {
         return
             super.verifyTx(
@@ -79,7 +102,7 @@ contract PreimageVerifier is Verifier {
                     Pairing.G2Point(b[0], b[1]),
                     Pairing.G1Point(c[0], c[1])
                 ),
-                input
+                i
             );
     }
 }
