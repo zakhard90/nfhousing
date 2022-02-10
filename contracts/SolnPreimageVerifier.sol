@@ -104,7 +104,7 @@ contract PreimageVerifier is Verifier {
         uint256[2] memory c,
         uint256[2] memory i
     ) external view returns (bool) {
-        return true;
+        return
             super.verifyTx(
                 Proof(
                     Pairing.G1Point(a[0], a[1]),
