@@ -16,10 +16,9 @@ contract SolnPreimageVerifier is NFHousingToken {
     // + TODO Create a function to add the solutions to the array and emit the event
     // + TODO Create a function to mint new NFT only after the solution has been verified
     // + - make sure the solution is unique (has not been used before)
-    //  - make sure you handle metadata as well as tokenSuplly
+    // + - make sure you handle metadata as well as tokenSuplly
 
     mapping(bytes32 => Solution) internal solutions;
-    mapping(bytes32 => bool) internal solutionsSubmitted;
     mapping(uint256 => bytes32) internal solutionsPerToken;
 
     constructor(address payable verAddress) NFHousingToken("NFHousing", "NFH") {
@@ -27,6 +26,7 @@ contract SolnPreimageVerifier is NFHousingToken {
     }
 
     struct Solution {
+        address account;
         uint256[2] a;
         uint256[2][2] b;
         uint256[2] c;
@@ -49,17 +49,15 @@ contract SolnPreimageVerifier is NFHousingToken {
     ) private {
         bytes32 key = keccak256(abi.encodePacked(a, b, c, i));
         require(
-            solutionsSubmitted[key] == false,
+            solutions[key].account == address(0),
             "Token proof hash already used"
         );
-        Solution memory s = Solution(a, b, c, i);
+        Solution memory s = Solution(msg.sender, a, b, c, i);
         solutions[key] = s;
-        solutionsSubmitted[key] = true;
         solutionsPerToken[token] = key;
         emit SolutionAdded(token, key, msg.sender, block.timestamp);
     }
 
-    /// api for verification
     function verify(
         uint256 token,
         uint256[2] memory a,
@@ -67,12 +65,19 @@ contract SolnPreimageVerifier is NFHousingToken {
         uint256[2] memory c,
         uint256[2] memory i
     ) external returns (bool) {
-        require(
-            verifier.verify(a, b, c, i),
-            "Verification of proof data failed"
-        );
+        bool verified = verifier.verify(a, b, c, i);
+        require(verified, "Verification of proof data failed");
         addSolution(token, a, b, c, i);
         return true;
+    }
+
+    function checkSolutionProvider(uint256 token)
+        external
+        view
+        returns (address)
+    {
+        bytes32 key = solutionsPerToken[token];
+        return solutions[key].account;
     }
 
     function mintVerified(address to, uint256 token)
@@ -80,10 +85,14 @@ contract SolnPreimageVerifier is NFHousingToken {
         returns (bool minted)
     {
         require(
-            solutionsPerToken[token].length == 0,
-            "Token proof already provided"
+            solutionsPerToken[token].length != 0,
+            "Token proof not yet provided"
         );
-        /// require verifier.verify to pass
+        bytes32 key = solutionsPerToken[token];
+        require(
+            solutions[key].account == to,
+            "The destination address has not provided the proof"
+        );
         return super.mint(to, token);
     }
 }
@@ -94,8 +103,8 @@ contract PreimageVerifier is Verifier {
         uint256[2][2] memory b,
         uint256[2] memory c,
         uint256[2] memory i
-    ) public view returns (bool) {
-        return
+    ) external view returns (bool) {
+        return true;
             super.verifyTx(
                 Proof(
                     Pairing.G1Point(a[0], a[1]),
