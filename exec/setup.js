@@ -20,18 +20,25 @@ module.exports = async function (callback) {
         const [owner, account] = accounts
 
         SolnPreimageVerifier.defaults({
-            gas: 6000000,
-            gasPrice: '2000000'
+            gas: 7000000,
         })
 
         const contract = await SolnPreimageVerifier.deployed()
 
         let i = 0;
         for (let p of proofs) {
-            console.log(p.inputs, `Verifying proof #${i+1}`)
+            console.log(p.inputs, `Verifying proof #${i + 1}`)
             let token = tokens[i]
-            await contract.verify(token, p.proof.a, p.proof.b, p.proof.c, p.inputs, { from: account })
-            await contract.mintVerified(account, token, { from: owner })            
+            await contract.verify(token, p.proof.a, p.proof.b, p.proof.c, p.inputs, { from: owner })
+            i++
+        }
+        console.log(`Verified ${i} tokens`)
+
+        i = 0;
+        for (let p of proofs) {
+            console.log(p.inputs, `Minting token #${tokens[i]}`)
+            let token = tokens[i]
+            await contract.mintVerified(owner, token, { from: owner })            
             i++
         }
         console.log(`Minted ${i} tokens`)
