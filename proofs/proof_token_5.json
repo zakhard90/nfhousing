@@ -1,0 +1,26 @@
+{
+  "proof": {
+    "a": [
+      "0x1921def072dc27f9a3b1b3dc6145ef7f77c5725e68966defbf1a03c54e5fd3ec",
+      "0x20d545b6719d14ff0b805d9d13dfdb40a77b56c1c76bdabeef3d910d3b4a4cac"
+    ],
+    "b": [
+      [
+        "0x12cfeafd2f111abc95bc032c75850a3b128da0d030029d7024a42a5d5963fd65",
+        "0x292d8440faefc00d5db36e8c1d9f02a37eb013bc655a3b54a9a89d0337eeb94e"
+      ],
+      [
+        "0x1d01c00edc84c5a3215062156627d4d558382ee5afca5cf2bcee07e42b6c033e",
+        "0x22ed314e3add7e0716fe69fa1cc68fd390928aa8a26c9ac4c16b690e09c21a66"
+      ]
+    ],
+    "c": [
+      "0x2264bdfd94f25f8b0ef732b3e8f541e915f395e911f27a2e925997ca6ac2e6cd",
+      "0x1001546efa031a3a51c50991be13f4eacde4d9e24d6e5cf5acb133602f6958da"
+    ]
+  },
+  "inputs": [
+    "0x00000000000000000000000000000000c6481e22c5ff4164af680b8cfaa5e8ed",
+    "0x000000000000000000000000000000003120eeff89c4f307c4a6faaae059ce10"
+  ]
+}

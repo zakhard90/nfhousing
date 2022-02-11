@@ -4,11 +4,11 @@
 
 const PreimageVerifier = artifacts.require('PreimageVerifier')
 const SolnPreimageVerifier = artifacts.require('SolnPreimageVerifier')
-const p1 = require('./proofs/proof_token_1.json')
-const p2 = require('./proofs/proof_token_2.json')
-const p3 = require('./proofs/proof_token_3.json')
-const p4 = require('./proofs/proof_token_4.json')
-const p5 = require('./proofs/proof_token_5.json')
+const p1 = require('../proofs/proof_token_1.json')
+const p2 = require('../proofs/proof_token_2.json')
+const p3 = require('../proofs/proof_token_3.json')
+const p4 = require('../proofs/proof_token_4.json')
+const p5 = require('../proofs/proof_token_5.json')
 
 const proofs = [p1, p2, p3, p4, p5]
 const tokens = [1, 2, 3, 4, 5]

@@ -21,5 +21,6 @@ zokrates/code/proof/verification.key
 zokrates/code/proof/verifier.sol
 zokrates/code/proof/witness
 zokrates/code/proof/proof.json
+zokrates/code/proof/proofs.sh
 
 instructions.txt
