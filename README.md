@@ -52,15 +52,15 @@ file with a unique name
 
 ### OpenSea
 
-[NFHousing Collection](https://testnets.opensea.io/collection/nfhousing)
+[NFHousing Token Collection](https://testnets.opensea.io/collection/nfhousing-v2)
 
 __DISCLAIMER: I do not own the collection logo or the header image, \
 I've used some free pictures available on freepick.com and unsplash.com__
 
 ### Etherscan
 
-Contract on Rinkeby [0x95FD33797675782FA2e0c309FC01a296449204dF](https://rinkeby.etherscan.io/address/0x95FD33797675782FA2e0c309FC01a296449204dF) \
+Contract on Rinkeby [0x005d9cB551aFB88f53Da6d305fF4dDB2fF1E5f66](https://rinkeby.etherscan.io/address/0x005d9cB551aFB88f53Da6d305fF4dDB2fF1E5f66) \
 [Token transactions](https://rinkeby.etherscan.io/address/0x783a6977da09f147061acac6aa3554f771080e09#tokentxnsErc721) \
-[Token sold](https://rinkeby.etherscan.io/tx/0xd86672f45dad622aaea7cb829b776aac1741281f7f36f8becd87695e3cad60c9) on OpenSea 
+[Token sold](https://rinkeby.etherscan.io/tx/0x5fb658df88ee6282a79976826f37c4b476a338da88f4dd744a87758ec416e301) on OpenSea 
 
 

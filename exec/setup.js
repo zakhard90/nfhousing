@@ -43,8 +43,8 @@ module.exports = async function (callback) {
         const contract = await SolnPreimageVerifier.deployed()
 
         /* ------------ Checking if the deployed contract data is correct ----------- */
-        let name = await contract.getName.call();
-        let symbol = await contract.getSymbol.call();
+        let name = await contract.name.call();
+        let symbol = await contract.symbol.call();
         console.log(contract.address, "Address");
         console.log(name, "Name");
         console.log(symbol, "Symbol");
@@ -81,7 +81,7 @@ module.exports = async function (callback) {
 
         console.log(`Transferef token ${tokens[0]}`)
 
-        let tokenURI = await contract.getTokenURI.call(tokens[0]);
+        let tokenURI = await contract.tokenURI.call(tokens[0]);
         console.log(tokenURI, "Token 1 URI");
 
         /* --------------------------- Checking the events -------------------------- */

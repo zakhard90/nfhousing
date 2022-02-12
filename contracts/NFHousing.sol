@@ -529,35 +529,27 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
      */
 
     constructor(
-        string memory name,
-        string memory symbol,
-        string memory baseTokenURI
+        string memory namePar,
+        string memory symbolPar,
+        string memory baseTokenURIPar
     ) {
         // + TODO: set instance var values
-        _name = name;
-        _symbol = symbol;
-        _baseTokenURI = baseTokenURI;
+        _name = namePar;
+        _symbol = symbolPar;
+        _baseTokenURI = baseTokenURIPar;
 
         _registerInterface(_INTERFACE_ID_ERC721_METADATA);
     }
 
-    function getName() external view returns (string memory) {
+    function name() external view returns (string memory) {
         return _name;
     }
 
-    function getSymbol() external view returns (string memory) {
+    function symbol() external view returns (string memory) {
         return _symbol;
     }
 
-    function getBaseTokenURI() external view returns (string memory) {
-        return _baseTokenURI;
-    }
-
-    function getTokenURI(uint256 tokenId)
-        external
-        view
-        returns (string memory)
-    {
+    function tokenURI(uint256 tokenId) external view returns (string memory) {
         require(_exists(tokenId), "Token does not exist");
         return _tokenURIs[tokenId];
     }
