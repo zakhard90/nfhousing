@@ -37,7 +37,7 @@ module.exports = async function (callback) {
         const [owner, account] = accounts
 
         SolnPreimageVerifier.defaults({
-            gas: 7000000,
+            gas: 6000000,
         })
 
         const contract = await SolnPreimageVerifier.deployed()

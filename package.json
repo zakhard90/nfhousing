@@ -4,16 +4,17 @@
     "description": "Capstone project for Udacity Blockchain Developer Nanodegree",
     "main": "index.js",
     "scripts": {
-        "dev": "lite-server",
         "compile": "truffle compile",
+        "test": "truffle test",
         "migrate": "truffle migrate --reset",
-        "test": "truffle test"
+        "setup": "truffle exec exec/setup.js",
+        "migrate-testnet": "truffle migrate --reset --network rinkeby",
+        "setup-testnet": "truffle exec exec/setup.js --network rinkeby"
     },
     "keywords": [],
     "author": "pk <pkrasam@gmail.com> (https://ipfs.infura.io/ipfs/QmSXiR9Khm3yo1J67nUopvVBxFJ8YGN2fUGZ34Etr3m92x/)",
     "license": "MIT",
     "devDependencies": {
-        "lite-server": "^2.6.1",
         "chai": "4.2.0",
         "chai-as-promised": "7.1.1",
         "chai-bignumber": "3.0.0"
